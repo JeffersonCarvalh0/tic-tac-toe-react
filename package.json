@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "0.1.0",
-  "homepage": "https://jeffersoncarvalh0.github.io/tic-tac-toe-react/",
+  "homepage": "https://jeffersoncarvalh0.github.io/tic-tac-toe-react",
   "private": true,
   "dependencies": {
     "react": "^16.7.0",
