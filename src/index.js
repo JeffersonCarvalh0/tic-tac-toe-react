@@ -68,6 +68,19 @@ class Board extends React.Component {
     }
 }
 
+function HistoryButton(props) {
+    const desc = props.move ? `Go to move #${props.move} (${props.step.coord.x}, ${props.step.coord.y})` : 'Go to game start';
+    const thick = props.move === props.stepNumber ? "thick" : "";
+
+    return (
+        <li key={ props.move }>
+            <button onClick={ () => props.onClick(props.move) }>
+                <p className={ thick }>{ desc }</p>
+            </button>
+        </li>
+    );
+}
+
 class Game extends React.Component {
     constructor(props) {
         super(props);
@@ -101,18 +114,24 @@ class Game extends React.Component {
         });
     }
 
+    renderHistoryButton(move) {
+        return (
+            <HistoryButton
+                move={ move }
+                step={ this.state.history[move] }
+                stepNumber={ this.state.stepNumber }
+                onClick={ (step) => this.jumpTo(step) }
+            />
+        );
+    }
+
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
-            const desc = move ? `Go to move #${move} (${history[move].coord.x}, ${history[move].coord.y})` : 'Go to game start';
-            return (
-                <li key={ move }>
-                    <button onClick={ () => this.jumpTo(move) }>{ desc }</button>
-                </li>
-            )
+            return this.renderHistoryButton(move);
         });
 
         let status;
